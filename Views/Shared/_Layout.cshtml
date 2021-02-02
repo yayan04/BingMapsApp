@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Harmoni Regency", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -44,6 +44,31 @@
         function GetMap() {
             var map = new Microsoft.Maps.Map('#myMap');
 
+            //var center = map.getCenter();
+
+            ////Create custom Pushpin
+            //var pin = new Microsoft.Maps.Pushpin(center, {
+            //    title: 'Microsoft',
+            //    subTitle: 'City Center',
+            //    text: '1',
+            //    color: 'red'
+            //});
+
+            ////Add the pushpin to the map
+            //map.entities.push(pin);
+
+            Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                var searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                var requestOptions = {
+                    bounds: map.getBounds(),
+                    where: 'Bandung Barat',
+                    callback: function (answer, userData) {
+                        map.setView({ bounds: answer.results[0].bestView });
+                        map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location));
+                    }
+                };
+                searchManager.geocode(requestOptions);
+            });
         }
     </script>
 

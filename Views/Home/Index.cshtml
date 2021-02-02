@@ -1,33 +1,62 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div id="myMap" style="position:relative;width:600px;height:400px;"></div>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+@model IEnumerable<Sample.BingMaps.Models.Houses>
+<div class="container row p-o m-0">
+    <div class="col-md-10">
+        <h2 class="text-info">Daftar Rumah</h2>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="col-md-2" style="padding-top:20px">
+        @Html.ActionLink("Tambah Daftar Baru", "Create", "", null, new { @class = "btn btn-info btn-sm" })
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-12 border">
+        <form method="post">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            @Html.DisplayNameFor(model => model.LabelHouse)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TypeHouse)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Address)
+                        </th>
+                        @*<th></th>*@
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LabelHouse)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TypeHouse)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            @*<td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.AccountId }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.AccountId }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.AccountId })
+                            </td>*@
+                        </tr>
+                    }
+
+                </table>
+            }
+            else
+            {
+                <p>Tidak ada data rumah. </p>
+            }
+
+        </form>
+        <br />
+        <div id="myMap" style="position:relative;width:100%;height:400px;"></div>
     </div>
 </div>
